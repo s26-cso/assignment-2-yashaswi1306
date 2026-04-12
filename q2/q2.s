@@ -1,44 +1,44 @@
 .section .data
-newline:  .string "\n"       
-int:    .string "%d "       
-m_one:  .string "-1 "      
+newline:.string "\n"       
+int:.string "%d "       
+m_one:.string "-1 "      
 
 .section .text
 
 .global main
 
 main:
-addi sp,sp,-48        
+addi sp,sp,-48
 sd s4,0(sp) #stack(min stack like dsa) 
 sd s3,8(sp)   #arr
 sd s2,16(sp)     #number of elements in array
 sd s1,24(sp)  #final
 sd ra,40(sp) #ret
-sd s0,32(sp)   #stack top
-addi s2,a0,-1    #s2=n -1 (cuz the ./a.out is also in total)
+sd s0,32(sp)  #stack top
+addi s2,a0,-1  #s2=n -1 (cuz the ./a.out is also in total)
 addi sp,sp,-8 #malloc shldnt be called before storing the pointer to argv
 
-sd a1,0(sp)            
+sd a1,0(sp) 
 ###to make space for array
 slli a0,s2,3 #t1=8*n
-call malloc          
-mv s3,a0         
+call malloc  
+mv s3,a0     
 ###to make space for min stack
 
 slli a0,s2,3
 call malloc            
-mv s4,a0             
+mv s4,a0          
 
 ###to make space for ans
 
- slli a0,s2,3     
-call malloc          
+ slli a0,s2,3 
+call malloc        
 mv s1,a0
 
 li s0,-1 #(cuz final for last will be -1.)
 
 ld a1,0(sp)    
-addi sp,sp,8          
+addi sp,sp,8  
 #got argv from stack
 
 li t0,0
@@ -48,7 +48,7 @@ bge t0,s2,l2 #while(i<n)
 addi t1,t0,1  #t1=i+1
 slli t1,t1,3 #cuz 8 bytes per int
 add t1,a1,t1 #t1=&argv[proper index]   
-ld a0,0(t1) 
+ld a0,0(t1)
 
 #program name shld be saved which is arg[0]
 addi sp,sp,-16
@@ -109,8 +109,8 @@ sd t4,0(t3)
 
 l5:
 addi s0,s0,1  #top++ 
-slli t3,s0,3      
-add t3,s4,t3       
+slli t3,s0,3
+add t3,s4,t3
 sd t0,0(t3)   #stack[top]=i 
 
 addi t0,t0,-1 #i--
@@ -127,13 +127,13 @@ ld t1,0(t1) #t1=final[i]
 #store i and final[i] 
 addi sp,sp,-16
 sd t6,8(sp)
-sd t1,0(sp)         
+sd t1,0(sp)  
 
 bltz t1,one
 
 la a0,int #%d
 ld a1,0(sp)  #t2=final[i]
-call printf       
+call printf
 j ret1
 
 one:
@@ -151,11 +151,11 @@ la a0,newline
 call printf
 
 ld s4,0(sp)
-ld s3,8(sp)            
+ld s3,8(sp)          
 ld s2,16(sp)
 ld s1,24(sp)          
 ld s0,32(sp)           
 ld ra,40(sp)           
 addi sp,sp,48       
-ret                 
+ret          
 
