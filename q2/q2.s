@@ -20,7 +20,7 @@ addi sp,sp,-8 #malloc shldnt be called before storing the pointer to argv
 
 sd a1,0(sp) 
 ###to make space for array
-#unnecessary change so commit can be renamed
+
 slli a0,s2,3 #t1=8*n
 call malloc  
 mv s3,a0     
@@ -67,6 +67,18 @@ sd a0,0(t1)    #store that
 
 j l1
 l2:
+li t0,0
+minus:
+#makes evrything -1
+bge t0,s2,nxt1
+slli t1,t0,3
+li t2,-1
+add t1,s1,t1
+addi t0,t0,1
+sd t2,0(t1)
+j minus
+
+nxt1:
 addi t0,s2,-1  #i= n-1 to 0
 l3_logic:
 li t6,0
@@ -92,7 +104,7 @@ j pop
 
 
 l4:
-blt s0,t6,minus #if -1 largest element
+blt s0,t6,l5
 slli t4,s0,3
 add t4,s4,t4
 ld t4,0(t4) #t4=stack[top]
@@ -101,12 +113,7 @@ add t3,s1,t3  #t3=&final[i]
 sd t4,0(t3)   #final[i]=stack[top]
 j l5
 
-minus:
-slli t3,t0,3  #top*8
-add t3,s1,t3
-
-li t4,-1    
-sd t4,0(t3)      
+   
 
 l5:
 addi s0,s0,1  #top++ 

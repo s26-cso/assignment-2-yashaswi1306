@@ -9,8 +9,8 @@ int main() {
     void* lib=NULL;
     char str[10];
     char end[6]="";
-    while(scanf("%s %d %d",str,&a,&b)==3){
-
+    while(1){
+        scanf("%s %d %d",str,&a,&b);
         if(lib)
         {
             dlclose(lib);

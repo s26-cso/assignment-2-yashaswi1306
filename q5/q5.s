@@ -65,7 +65,6 @@ mv t1,a0
 bne t1,t0,false 
 j l1
 
-
 true:
 la a0,yes
 call printf 
