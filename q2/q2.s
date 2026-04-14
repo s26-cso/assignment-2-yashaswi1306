@@ -1,7 +1,6 @@
 .section .data
 newline:.string "\n"       
-int:.string "%d "       
-m_one:.string "-1 "      
+int:.string "%d "            
 
 .section .text
 
@@ -145,7 +144,8 @@ call printf
 j ret1
 
 one:
-la a0,m_one    #string -1
+la a0,int
+li a1,-1
 call printf
 
 ret1:
