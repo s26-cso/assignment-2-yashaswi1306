@@ -10,13 +10,20 @@ int main() {
     char str[10];
     while(1){
         if(scanf("%s %d %d",str,&a,&b)==EOF)
-        {break;}
-
+        {
+            return 0;
+        }
+        
         char name[30];
         strcpy(name,"./lib");
         strcat(name,str);
         strcat(name,".so");
         // so its [name]=./lib[str].so
+        if (lib) 
+        {
+        dlclose(lib);
+        lib=NULL;
+        }
         lib=dlopen(name,RTLD_LAZY);
         if(!lib)
         {
@@ -30,10 +37,6 @@ int main() {
         }
         printf("%d\n",f1(a,b));
     }
-    if (lib) 
-    {
-        dlclose(lib);
-        lib=NULL;
-    }
+  
     return 0;
 }
