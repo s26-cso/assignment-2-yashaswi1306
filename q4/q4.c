@@ -8,14 +8,9 @@ int main() {
     int a,b;
     void* lib=NULL;
     char str[10];
-    char end[6]="";
     while(1){
-        scanf("%s %d %d",str,&a,&b);
-        if(lib)
-        {
-            dlclose(lib);
-            lib=NULL;
-        }
+        if(scanf("%s %d %d",str,&a,&b)==EOF)
+        {break;}
 
         char name[30];
         strcpy(name,"./lib");
@@ -27,6 +22,10 @@ int main() {
         func f1=(func)(dlsym(lib,str));
         printf("%d\n",f1(a,b));
     }
-    if (lib) dlclose(lib);
+    if (lib) 
+    {
+        dlclose(lib);
+        lib=NULL;
+    }
     return 0;
 }
