@@ -18,8 +18,16 @@ int main() {
         strcat(name,".so");
         // so its [name]=./lib[str].so
         lib=dlopen(name,RTLD_LAZY);
+        if(!lib)
+        {
+            continue;
+        }
         typedef int (*func)(int,int); //function definition
         func f1=(func)(dlsym(lib,str));
+        if(!f1)
+        {
+            continue;
+        }
         printf("%d\n",f1(a,b));
     }
     if (lib) 
