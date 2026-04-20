@@ -1,7 +1,8 @@
 .section .data
 newline:.string "\n"       
-int:.string "%d "
-int_last: .string "%d\n"            
+int:.string "%d"
+int_last: .string "%d\n"    
+space: .string " "
 
 .section .text
 
@@ -137,15 +138,28 @@ addi sp,sp,-16
 sd t6,8(sp)
 sd t1,0(sp)  
 
-addi t2,s2,-1
-beq t6,t2,last
+bltz t1,print_neg
+ld a1,0(sp)
+j print_val
 
-bltz t1,one
+print_neg:
+li a1,-1
 
-la a0,int #%d
-ld a1,0(sp)  #t2=final[i]
+print_val:
+la a0,int
 call printf
-j ret1
+
+addi t2,s2,-1
+beq t6,t2,no_space
+
+la a0,space
+call printf
+
+no_space:
+ld t6,8(sp)
+addi sp,sp,16
+addi t6,t6,1
+j loop
 
 
 
@@ -172,7 +186,7 @@ ret1:
 ld t6,8(sp)  #t0=i
 addi sp,sp,16
 addi t6,t6,1 #i++
-j loop
+
 
 nxt:
 la a0,newline          
