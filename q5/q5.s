@@ -31,6 +31,24 @@ mv a0,s4
 
 call ftell
 mv s3,a0 #so s3 shws file_len. Cursor at end, s3 with len
+addi t0,s3,-1
+mv a0,s4
+mv a1,t0
+li a2,0
+call fseek
+
+mv a0,s4
+call fgetc
+li t1,10
+bne t1,a0,start
+
+addi s3,s3,-1
+start:
+
+mv a0,s4
+li a2,0
+li a1,0
+call fseek
 
 li s2,0
 li t2,1
@@ -50,7 +68,7 @@ mv t0,a0 #t0=char at idx I from beginning
 
 #repeat for char from end
 mv a0,s4 
-addi t1,s2,2
+addi t1,s2,1
 addi s2,s2,1
 neg t1,t1 
 mv a1,t1 #offset= -(i+1) 
@@ -83,4 +101,3 @@ ld ra,0(sp)
 ld s4,8(sp)       
 addi sp,sp,32     
 ret                 
-
