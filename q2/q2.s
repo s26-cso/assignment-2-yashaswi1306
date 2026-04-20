@@ -1,7 +1,7 @@
 .section .data
 newline:.string "\n"       
 int:.string "%d "
-int_last: .string "%d"            
+int_last: .string "%d\n"            
 
 .section .text
 
@@ -137,24 +137,36 @@ addi sp,sp,-16
 sd t6,8(sp)
 sd t1,0(sp)  
 
+addi t2,s2,-1
+beq t6,t2,last
+
 bltz t1,one
-addi t4,s2,-1
-beq t4,t6,last
+
 la a0,int #%d
 ld a1,0(sp)  #t2=final[i]
 call printf
 j ret1
 
-last:
-la a0,int_last #%d
-ld a1,0(sp)  #t2=final[i]
-call printf
-j ret1
+
 
 one:
 la a0,int
 li a1,-1
 call printf
+j ret1
+
+last:
+bltz t1,one_last
+la a0,int_last #%d
+ld a1,0(sp)  #t2=final[i]
+call printf
+j ret1
+
+one_last:
+la a0,int_last
+li a1,-1
+call printf
+j ret1
 
 ret1:
 ld t6,8(sp)  #t0=i
