@@ -1,6 +1,7 @@
 .section .data
 newline:.string "\n"       
-int:.string "%d "            
+int:.string "%d "
+int_last: .string "%d"            
 
 .section .text
 
@@ -137,8 +138,15 @@ sd t6,8(sp)
 sd t1,0(sp)  
 
 bltz t1,one
-
+addi t4,s2,-1
+beq t4,t6,last
 la a0,int #%d
+ld a1,0(sp)  #t2=final[i]
+call printf
+j ret1
+
+last:
+la a0,int_last #%d
 ld a1,0(sp)  #t2=final[i]
 call printf
 j ret1
