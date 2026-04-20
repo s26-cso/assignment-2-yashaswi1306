@@ -50,7 +50,7 @@ mv t0,a0 #t0=char at idx I from beginning
 
 #repeat for char from end
 mv a0,s4 
-addi t1,s2,1
+addi t1,s2,2
 addi s2,s2,1
 neg t1,t1 
 mv a1,t1 #offset= -(i+1) 
